@@ -1,3 +1,4 @@
+import { ErrorInterceptorProvider } from './_services/error.interceptor';
 import { AuthService } from './_services/auth.service';
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -22,7 +23,7 @@ import { RegisterComponent } from './register/register.component';
     HttpClientModule,
     FormsModule
   ],
-  providers: [AuthService],
+  providers: [AuthService, ErrorInterceptorProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
