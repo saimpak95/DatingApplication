@@ -14,6 +14,12 @@ namespace DatingApp.API.Helpers
             response.Headers.Add("CORS-expose-error", "ApplicationError");
             response.Headers.Add("CORS-allow-any-origin", "*");
 
+        }  public static int CalculateAge(this DateTime dateTime)
+        {
+            var age = DateTime.Today.Year - dateTime.Year;
+            if (dateTime.AddYears(age) > DateTime.Today)
+                age--;
+            return age;
         }
     }
 }

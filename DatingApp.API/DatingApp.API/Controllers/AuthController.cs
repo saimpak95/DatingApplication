@@ -49,7 +49,7 @@ namespace DatingApp.API.Controllers
         public async Task<IActionResult> Login([FromBody]UserForLoginViewModel user)
         {
             
-                var userFromRepo = await repo.Login(user.UserName.ToLower(), user.Password);
+                var userFromRepo = await repo.Login(user.UserName, user.Password);
                 if (userFromRepo == null)
                     return Unauthorized();
 
