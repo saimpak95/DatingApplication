@@ -13,19 +13,12 @@ export class MemberDetailsComponent implements OnInit {
 
   user: User;
 
-  constructor(private userService: UserService, private alertify: AlertifyService, private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.data.subscribe((data) => {
       this.user = data.user;
-      for (const photo of this.user.photos){
-  console.log(photo.url);
-      }
-      
-        
-      
     });
-   
   }
 
   //  members/4

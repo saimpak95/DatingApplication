@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using DatingApp.Repository;
@@ -8,6 +9,7 @@ using DatingApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.IIS.Core;
 
 namespace DatingApp.API.Controllers
 {
@@ -37,6 +39,21 @@ namespace DatingApp.API.Controllers
             var user = await repo.GetUserByID(id);
             var userToReturn = mapper.Map<UserForDetailViewModel>(user);
             return Ok(userToReturn);
+        }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser(int id,[FromBody] UserForUpdateViewModel user)
+        {
+           if (id!= int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                return Unauthorized();
+            }
+            var userFromrepo = await repo.GetUserByID(id);
+            mapper.Map(user, userFromrepo);
+            if(await repo.SaveAll())
+            {
+                return NoContent();
+            }
+            throw new Exception($"Updating user {id} failed on save");
         }
     }
 }

@@ -10,7 +10,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { RouterModule } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import {CarouselModule} from "ngx-carousel-lib";
+import {CarouselModule} from 'ngx-carousel-lib';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -26,6 +26,9 @@ import { MemberDetailResolver } from './_resolvers/member-details.resolver';
 import { AlertifyService } from './_services/alertify.service';
 import { AuthGuard } from './_guards/auth.guard';
 import { UserService } from './_services/user.service';
+import { MemberEditComponent } from './members/member-edit/member-edit.component';
+import { MemberEditResolver } from './_resolvers/member-edit.resolver';
+import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
 
 
 export function tokenGetter(){
@@ -42,7 +45,8 @@ export function tokenGetter(){
     ListsComponent,
     MessagesComponent,
     MemberCardComponent,
-    MemberDetailsComponent
+    MemberDetailsComponent,
+    MemberEditComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +65,10 @@ export function tokenGetter(){
     CarouselModule,
     TabsModule.forRoot()
   ],
-  providers: [AuthService, UserService, AlertifyService, AuthGuard, ErrorInterceptorProvider, MemberDetailResolver],
+  providers: [AuthService, UserService,
+              AlertifyService, AuthGuard,
+              ErrorInterceptorProvider, MemberDetailResolver,
+              MemberEditResolver, PreventUnsavedChangesGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
