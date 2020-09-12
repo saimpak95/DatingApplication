@@ -30,6 +30,7 @@ namespace DatingApp.DomainModels
         public string Description { get; set; }
         public string DateAdded { get; set; }
         public bool IsMain { get; set; }
+        public string PublicID { get; set; }
         public User User { get; set; }
         public int UserId { get; set; }
     }

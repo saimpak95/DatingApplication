@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,6 +15,9 @@ namespace DatingApp.Repository
         Task<bool> SaveAll();
         Task<IEnumerable<User>> GetUsers();
         Task<User> GetUserByID(int ID);
+
+        Task<Photo> GetPhoto(int ID);
+        Task<Photo> GetMainPhotoForUser(int UserID);
     }
     public class DatingRepository : IDatingRepository
     {
@@ -31,6 +35,17 @@ namespace DatingApp.Repository
         public void Delete<T>(T entity) where T : class
         {
             db.Remove(entity);
+        }
+
+        public async Task<Photo> GetMainPhotoForUser(int UserID)
+        {
+            return await db.Photos.Where(u => u.UserId == UserID).FirstOrDefaultAsync(p => p.IsMain);
+        }
+
+        public async Task<Photo> GetPhoto(int ID)
+        {
+            var photo = await db.Photos.FirstOrDefaultAsync(p=>p.Id==ID);
+            return photo;
         }
 
         public async Task<User> GetUserByID(int ID)

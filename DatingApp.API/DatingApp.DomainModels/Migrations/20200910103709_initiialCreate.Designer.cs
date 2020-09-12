@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DatingApp.DomainModels.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200907093204_ExtendedUserClass")]
-    partial class ExtendedUserClass
+    [Migration("20200910103709_initiialCreate")]
+    partial class initiialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,15 +33,18 @@ namespace DatingApp.DomainModels.Migrations
                     b.Property<bool>("IsMain")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("PublicID")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Url")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("UserID")
+                    b.Property<int>("UserId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Photos");
                 });
@@ -114,7 +117,7 @@ namespace DatingApp.DomainModels.Migrations
                 {
                     b.HasOne("DatingApp.DomainModels.User", "User")
                         .WithMany("Photos")
-                        .HasForeignKey("UserID")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
