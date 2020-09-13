@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AutoMapper;
 using DatingApp.DomainModels;
 using DatingApp.Repository;
 using DatingApp.ViewModels;
@@ -21,29 +22,28 @@ namespace DatingApp.API.Controllers
     {
         private readonly IAuthRepository repo;
         private readonly IConfiguration config;
+        private readonly IMapper mapper;
 
-        public AuthController(IAuthRepository repo,IConfiguration config)
+        public AuthController(IAuthRepository repo,IConfiguration config, IMapper mapper)
         {
             this.repo = repo;
             this.config = config;
+            this.mapper = mapper;
         }
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserForRegisterViewModel user)
         {
             
-            var username = user.UserName.ToLower();
+            var username = user.UserName;
             
             if(await repo.UserExists(username))
             {
                 return BadRequest("User already exist!");
             }
-            var userToCreate = new User
-            {
-                UserName = username,
-
-            };
+            var userToCreate = mapper.Map<User>(user);
             var createdUser = await repo.Register(userToCreate, user.Password);
-            return StatusCode(201); // we will fix it later
+            var userToReturn = mapper.Map<UserForDetailViewModel>(createdUser);
+            return CreatedAtRoute("GetUser", new { Controller = "Users", id = createdUser.Id }, userToReturn);
         }
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody]UserForLoginViewModel user)
