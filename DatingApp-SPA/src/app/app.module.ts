@@ -13,6 +13,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { FileUploadModule } from 'ng2-file-upload';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import {CarouselModule} from 'ngx-carousel-lib';
+import { TimeagoModule } from 'ngx-timeago';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -70,7 +71,8 @@ export function tokenGetter(){
     CarouselModule,
     TabsModule.forRoot(),
     FileUploadModule,
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    TimeagoModule.forRoot()
   ],
   providers: [AuthService, UserService,
               AlertifyService, AuthGuard,
