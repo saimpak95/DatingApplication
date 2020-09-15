@@ -25,6 +25,7 @@ login(model: any){
       const user = response;
       if (user){
         localStorage.setItem('token', user.token);
+        localStorage.setItem('user', JSON.stringify(user.userToReturn));
         this.decodeedToken = this.helper.decodeToken(user.token);
         console.log(this.decodeedToken);
       }
