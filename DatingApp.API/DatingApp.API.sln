@@ -7,9 +7,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatingApp.API", "DatingApp.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatingApp.DomainModels", "DatingApp.DomainModels\DatingApp.DomainModels.csproj", "{A3EAC759-8B22-44DB-B9A0-94F42BF665AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatingApp.Repository", "DatingApp.Repository\DatingApp.Repository.csproj", "{5DD28FBA-C2A2-4AE7-A2EA-C8478EE7B41A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatingApp.Repository", "DatingApp.Repository\DatingApp.Repository.csproj", "{5DD28FBA-C2A2-4AE7-A2EA-C8478EE7B41A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatingApp.ViewModels", "DatingApp.ViewModels\DatingApp.ViewModels.csproj", "{8E7AFD4F-2498-4770-B43A-C7CC5B332228}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatingApp.ViewModels", "DatingApp.ViewModels\DatingApp.ViewModels.csproj", "{8E7AFD4F-2498-4770-B43A-C7CC5B332228}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0A599BF6-E0B6-4387-BE59-643DEE552ECB}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
