@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DatingApp.DomainModels
 {
-   public class Message
+    public class Message
     {
         public int Id { get; set; }
         public int SenderId { get; set; }

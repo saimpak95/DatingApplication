@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace DatingApp.Repository.Helpers
+﻿namespace DatingApp.Repository.Helpers
 {
     public class UserParams
     {
@@ -14,8 +9,9 @@ namespace DatingApp.Repository.Helpers
         public int PageSize
         {
             get { return pageSize; }
-            set { pageSize =  (value > MaxPageSize)? MaxPageSize : value; }
+            set { pageSize = (value > MaxPageSize) ? MaxPageSize : value; }
         }
+
         public int UserID { get; set; }
         public string Gender { get; set; }
         public int MinAge { get; set; } = 18;
@@ -23,6 +19,5 @@ namespace DatingApp.Repository.Helpers
         public string OrderBy { get; set; }
         public bool Likees { get; set; } = false;
         public bool Likers { get; set; } = false;
-
     }
 }

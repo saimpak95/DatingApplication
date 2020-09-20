@@ -1,15 +1,13 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Text.Json;
 
 namespace DatingApp.DomainModels
 {
-   public class Seed
+    public class Seed
     {
-        public static void SeedUsers(DataContext db) {
+        public static void SeedUsers(DataContext db)
+        {
             if (!db.Users.Any())
             {
                 var path = "../DatingApp.DomainModels/SeedData.json";
@@ -25,18 +23,15 @@ namespace DatingApp.DomainModels
                 }
                 db.SaveChanges();
             }
-                    
         }
 
         private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             using (var hmac = new System.Security.Cryptography.HMACSHA512())
-            {                  
+            {
                 passwordSalt = hmac.Key;
                 passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
             }
-
-
         }
     }
 }

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DatingApp.DomainModels;
+﻿using DatingApp.DomainModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace DatingApp.API.Controllers
 {
@@ -26,16 +22,15 @@ namespace DatingApp.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var values =await db.Values.ToListAsync();
+            var values = await db.Values.ToListAsync();
             return Ok(values);
         }
-
 
         [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetValue(int id)
         {
-            var values = await db.Values.FirstOrDefaultAsync(temp=> temp.Id==id);
+            var values = await db.Values.FirstOrDefaultAsync(temp => temp.Id == id);
             return Ok(values);
         }
     }

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DatingApp.Repository.Helpers
+﻿namespace DatingApp.Repository.Helpers
 {
-   public class MessageParams
+    public class MessageParams
     {
         private const int MaxPageSize = 50;
         public int PageNumber { get; set; } = 1;
@@ -15,6 +11,7 @@ namespace DatingApp.Repository.Helpers
             get { return pageSize; }
             set { pageSize = (value > MaxPageSize) ? MaxPageSize : value; }
         }
+
         public int UserId { get; set; }
         public string MessageContainer { get; set; } = "Unread";
     }

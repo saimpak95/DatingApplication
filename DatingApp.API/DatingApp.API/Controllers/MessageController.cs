@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using DatingApp.API.Helpers;
 using DatingApp.DomainModels;
 using DatingApp.Repository;
 using DatingApp.Repository.Helpers;
 using DatingApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace DatingApp.API.Controllers
 {
@@ -44,7 +42,7 @@ namespace DatingApp.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetMessagesForUser(int userId,[FromQuery] MessageParams messageParams)
+        public async Task<IActionResult> GetMessagesForUser(int userId, [FromQuery] MessageParams messageParams)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
             {
@@ -70,7 +68,7 @@ namespace DatingApp.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateMessage(int userId,[FromBody] MessageForCreationViewModel messageForCreationViewModel)
+        public async Task<IActionResult> CreateMessage(int userId, [FromBody] MessageForCreationViewModel messageForCreationViewModel)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
             {
@@ -83,14 +81,15 @@ namespace DatingApp.API.Controllers
                 return BadRequest("Could not find user");
             var message = mapper.Map<Message>(messageForCreationViewModel);
             repo.Add(message);
-            if(await repo.SaveAll())
+            if (await repo.SaveAll())
             {
                 var messageToReturn = mapper.Map<MessageToReturnViewModel>(message);
 
-                return CreatedAtRoute("GetMessage", new {userId = userId , MessageId = message.Id }, messageToReturn);
+                return CreatedAtRoute("GetMessage", new { userId = userId, MessageId = message.Id }, messageToReturn);
             }
             throw new Exception("Creating the message failed on save");
         }
+
         [HttpPost("{MessageId}")]
         public async Task<IActionResult> DeleteMessage(int MessageId, int userId)
         {
@@ -109,6 +108,7 @@ namespace DatingApp.API.Controllers
                 return NoContent();
             throw new Exception("Error deleting the message");
         }
+
         [HttpPost("{MessageId}/read")]
         public async Task<IActionResult> MarkasRead(int MessageId, int userId)
         {
@@ -128,5 +128,5 @@ namespace DatingApp.API.Controllers
 
             throw new Exception("Error deleting the message");
         }
-    }                                          
+    }
 }

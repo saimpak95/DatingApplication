@@ -1,26 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using AutoMapper;
+using DatingApp.API.Helpers;
 using DatingApp.DomainModels;
+using DatingApp.Repository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microsoft.EntityFrameworkCore;
-using DatingApp.Repository;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Net;
-using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Http;
-using DatingApp.API.Helpers;
-using AutoMapper;
 
 namespace DatingApp.API
 {
@@ -38,17 +30,17 @@ namespace DatingApp.API
         {
             services.AddControllers();
             services.AddDbContext<DataContext>(temp => temp.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddScoped<IAuthRepository,AuthRepository>();
+            services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IDatingRepository, DatingRepository>();
             services.AddCors();
             services.AddAutoMapper(typeof(AutoMapperProfiles));
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
                 {
-                     ValidateIssuerSigningKey = true,
-                     IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(Configuration.GetSection("AppSettings:Token").Value)) ,
-                     ValidateIssuer =false,
-                     ValidateAudience = false
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
                 });
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettins"));
             services.AddScoped<LogUserActivity>();
@@ -63,9 +55,10 @@ namespace DatingApp.API
             }
             else
             {
-                app.UseExceptionHandler(builder=> {
-
-                    builder.Run(async context => {
+                app.UseExceptionHandler(builder =>
+                {
+                    builder.Run(async context =>
+                    {
                         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                         var error = context.Features.Get<IExceptionHandlerFeature>();
                         if (error != null)
@@ -75,9 +68,7 @@ namespace DatingApp.API
                         }
                     });
                 });
-                
             }
-      
 
             app.UseRouting();
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());

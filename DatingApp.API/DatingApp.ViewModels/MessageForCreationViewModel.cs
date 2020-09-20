@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DatingApp.ViewModels
 {
-   public class MessageForCreationViewModel
+    public class MessageForCreationViewModel
     {
         public int SenderId { get; set; }
         public int RecipientId { get; set; }
@@ -15,6 +13,5 @@ namespace DatingApp.ViewModels
         {
             MessageSent = DateTime.Now;
         }
-
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DatingApp.DomainModels
+﻿namespace DatingApp.DomainModels
 {
     public class Like
     {

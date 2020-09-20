@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DatingApp.ViewModels
 {
-   public class UserForListViewModel
+    public class UserForListViewModel
     {
         public int Id { get; set; }
         public string UserName { get; set; }

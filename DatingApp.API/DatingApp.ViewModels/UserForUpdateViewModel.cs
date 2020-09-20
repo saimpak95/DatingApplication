@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DatingApp.ViewModels
+﻿namespace DatingApp.ViewModels
 {
     public class UserForUpdateViewModel
     {

@@ -1,11 +1,7 @@
 ﻿using AutoMapper;
 using DatingApp.DomainModels;
 using DatingApp.ViewModels;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security;
-using System.Threading.Tasks;
 
 namespace DatingApp.API.Helpers
 {
@@ -15,7 +11,7 @@ namespace DatingApp.API.Helpers
         {
             CreateMap<User, UserForListViewModel>()
                 .ForMember(dest => dest.PhotoUrl, opt => opt.MapFrom(src => src.Photos.FirstOrDefault(p => p.IsMain).Url))
-                .ForMember(dest => dest.Age, opt => opt.MapFrom(src=>src.DateOfBirth.CalculateAge()));
+                .ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.DateOfBirth.CalculateAge()));
             CreateMap<User, UserForDetailViewModel>()
                 .ForMember(dest => dest.PhotoUrl, opt => opt.MapFrom(src => src.Photos.FirstOrDefault(p => p.IsMain).Url))
                  .ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.DateOfBirth.CalculateAge()));
@@ -27,6 +23,7 @@ namespace DatingApp.API.Helpers
             CreateMap<MessageForCreationViewModel, Message>();
             CreateMap<Message, MessageForCreationViewModel>();
             CreateMap<Message, MessageToReturnViewModel>().ForMember(dest => dest.SenderPhotoUrl, opt => opt.MapFrom(src => src.Sender.Photos.FirstOrDefault(p => p.IsMain).Url))
-                                                           .ForMember(dest => dest.RecipientPhotoUrl, opt => opt.MapFrom(src => src.Recipient.Photos.FirstOrDefault(p => p.IsMain).Url));        }
+                                                           .ForMember(dest => dest.RecipientPhotoUrl, opt => opt.MapFrom(src => src.Recipient.Photos.FirstOrDefault(p => p.IsMain).Url));
+        }
     }
 }

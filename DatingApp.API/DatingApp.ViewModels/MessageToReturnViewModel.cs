@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DatingApp.ViewModels
 {
-   public class MessageToReturnViewModel
+    public class MessageToReturnViewModel
     {
         public int Id { get; set; }
         public int SenderId { get; set; }
@@ -17,6 +15,5 @@ namespace DatingApp.ViewModels
         public bool IsRead { get; set; }
         public DateTime? DateRead { get; set; }
         public DateTime MessageSent { get; set; }
-
     }
 }

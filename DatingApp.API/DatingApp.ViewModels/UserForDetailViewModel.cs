@@ -1,11 +1,9 @@
-﻿using DatingApp.DomainModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace DatingApp.ViewModels
 {
-   public class UserForDetailViewModel
+    public class UserForDetailViewModel
     {
         public int Id { get; set; }
         public string UserName { get; set; }
