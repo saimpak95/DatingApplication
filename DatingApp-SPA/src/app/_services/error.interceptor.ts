@@ -8,7 +8,7 @@ import {
   HTTP_INTERCEPTORS
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, delay } from 'rxjs/operators';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -18,6 +18,7 @@ export class ErrorInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
       catchError((error) => {
+        if (error) {
         if (error.status === 401){
           return throwError(error.statusText);
         }
@@ -36,7 +37,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             }
           }
           return throwError(modalStateError || serverError || 'Server Error');
-        }
+        }}
       })
     );
   }

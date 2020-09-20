@@ -17,7 +17,6 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import {ButtonsModule} from 'ngx-bootstrap/buttons';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 
-
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { HomeComponent } from './home/home.component';
@@ -40,6 +39,8 @@ import { MemberListResolver } from './_resolvers/member-list-resolver';
 import { ListsResolver } from './_resolvers/list.resolver';
 import { MessageResolver } from './_resolvers/messages.resolver';
 import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { LoadingInterceptor, LoadingInterceptorProvider } from './_services/loading.interceptor';
 
 
 export function tokenGetter(){
@@ -82,12 +83,14 @@ export function tokenGetter(){
     BsDatepickerModule.forRoot(),
     TimeagoModule.forRoot(),
     PaginationModule.forRoot(),
-    ButtonsModule.forRoot()
+    ButtonsModule.forRoot(),
+    NgxSpinnerModule
   ],
   providers: [AuthService, UserService,
               AlertifyService, AuthGuard,
               ErrorInterceptorProvider, MemberDetailResolver,
-              MemberEditResolver, PreventUnsavedChangesGuard, MemberListResolver, ListsResolver, MessageResolver],
+              MemberEditResolver, PreventUnsavedChangesGuard, MemberListResolver, ListsResolver, MessageResolver,
+              LoadingInterceptorProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
