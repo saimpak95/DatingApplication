@@ -20,6 +20,9 @@ namespace DatingApp.Repository
         Task<Photo> GetPhoto(int ID);
         Task<Photo> GetMainPhotoForUser(int UserID);
         Task<Like> GetLike(int userID, int recipientID);
+        Task<Message> GetMessage(int MessageID);
+        Task<PagedList<Message>> GetMessagesForUser(MessageParams messageParams);
+        Task<IEnumerable<Message>> GetMessageThread(int userID, int recipientId);
     }
     public class DatingRepository : IDatingRepository
     {
@@ -130,6 +133,45 @@ namespace DatingApp.Repository
         public async Task<Like> GetLike(int userID, int recipientID)
         {
             return await db.Likes.FirstOrDefaultAsync(u => u.LikerId == userID && u.LikeeId == recipientID);
+        }
+
+        public async Task<Message> GetMessage(int MessageID)
+        {
+            return await db.Messages.FirstOrDefaultAsync(m => m.Id == MessageID);
+        }
+
+        public async Task<PagedList<Message>> GetMessagesForUser(MessageParams messageParams)
+        {
+            var message = db.Messages.Include(u => u.Sender).ThenInclude(p => p.Photos).Include(u => u.Recipient).ThenInclude(p=>p.Photos).AsQueryable();
+            switch (messageParams.MessageContainer)
+            {
+                case "Inbox":
+                    message = message.Where(u => u.RecipientId == messageParams.UserId && u.RecipientDeleted == false);
+                    break;
+                case "Outbox":
+                    message = message.Where(u => u.SenderId == messageParams.UserId && u.SenderDeleted == false);
+                    break;
+                case "Unread":
+                    message = message.Where(u => u.RecipientId == messageParams.UserId && u.RecipientDeleted == false && u.IsRead == false);
+                    break;
+                default:
+                    break;
+            }
+            message = message.OrderByDescending(d=>d.MessageSent);
+            return await PagedList<Message>.CreateAsync(message, messageParams.PageNumber, messageParams.PageSize);
+        }
+
+        public async Task<IEnumerable<Message>> GetMessageThread(int userID, int recipientId)
+        {
+            var message = await db.Messages.Include(u => u.Sender)
+                                     .ThenInclude(p => p.Photos)
+                                     .Include(u => u.Recipient)
+                                     .ThenInclude(p => p.Photos)
+                                     .Where(m=>m.RecipientId == userID && m.RecipientDeleted == false && m.SenderId == recipientId || m.RecipientId == recipientId && m.SenderId == userID && m.SenderDeleted==false)
+                                     .OrderBy(m=>m.MessageSent)
+                                     .ToListAsync();
+            return message;
+
         }
     }
 }

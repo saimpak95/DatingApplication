@@ -12,10 +12,10 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { FileUploadModule } from 'ng2-file-upload';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import {CarouselModule} from 'ngx-carousel-lib';
 import { TimeagoModule } from 'ngx-timeago';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import {ButtonsModule} from 'ngx-bootstrap/buttons';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
 
 
 import { AppComponent } from './app.component';
@@ -38,6 +38,8 @@ import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.gu
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 import { MemberListResolver } from './_resolvers/member-list-resolver';
 import { ListsResolver } from './_resolvers/list.resolver';
+import { MessageResolver } from './_resolvers/messages.resolver';
+import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
 
 
 export function tokenGetter(){
@@ -56,7 +58,8 @@ export function tokenGetter(){
     MemberCardComponent,
     MemberDetailsComponent,
     MemberEditComponent,
-    PhotoEditorComponent
+    PhotoEditorComponent,
+    MemberMessagesComponent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +76,7 @@ export function tokenGetter(){
         disallowedRoutes: ['localhost:44363/api/auth'],
       }
     }),
-    CarouselModule,
+    CarouselModule.forRoot(),
     TabsModule.forRoot(),
     FileUploadModule,
     BsDatepickerModule.forRoot(),
@@ -84,7 +87,7 @@ export function tokenGetter(){
   providers: [AuthService, UserService,
               AlertifyService, AuthGuard,
               ErrorInterceptorProvider, MemberDetailResolver,
-              MemberEditResolver, PreventUnsavedChangesGuard, MemberListResolver, ListsResolver],
+              MemberEditResolver, PreventUnsavedChangesGuard, MemberListResolver, ListsResolver, MessageResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
