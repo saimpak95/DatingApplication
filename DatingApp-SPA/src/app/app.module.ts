@@ -40,7 +40,7 @@ import { ListsResolver } from './_resolvers/list.resolver';
 import { MessageResolver } from './_resolvers/messages.resolver';
 import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { LoadingInterceptor, LoadingInterceptorProvider } from './_services/loading.interceptor';
+import { LoadingInterceptorProvider } from './_services/loading.interceptor';
 
 
 export function tokenGetter(){
@@ -87,10 +87,10 @@ export function tokenGetter(){
     NgxSpinnerModule
   ],
   providers: [AuthService, UserService,
-              AlertifyService, AuthGuard,
+              AlertifyService, AuthGuard, LoadingInterceptorProvider,
               ErrorInterceptorProvider, MemberDetailResolver,
-              MemberEditResolver, PreventUnsavedChangesGuard, MemberListResolver, ListsResolver, MessageResolver,
-              LoadingInterceptorProvider],
+              MemberEditResolver, PreventUnsavedChangesGuard, MemberListResolver, ListsResolver, MessageResolver
+              ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

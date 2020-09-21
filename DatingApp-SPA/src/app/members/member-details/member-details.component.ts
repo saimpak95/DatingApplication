@@ -3,6 +3,9 @@ import { User } from 'src/app/_models/user';
 
 import { ActivatedRoute } from '@angular/router';
 import { TabsetComponent } from 'ngx-bootstrap/tabs';
+import { UserService } from 'src/app/_services/user.service';
+import { AuthService } from 'src/app/_services/auth.service';
+import { AlertifyService } from 'src/app/_services/alertify.service';
 
 @Component({
   selector: 'app-member-details',
@@ -13,7 +16,7 @@ export class MemberDetailsComponent implements OnInit {
 
   user: User;
   @ViewChild('staticTabs', { static: true }) staticTabs: TabsetComponent;
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private userService: UserService, private authService: AuthService, private alertify: AlertifyService) { }
   ngOnInit(): void {
     this.route.data.subscribe((data) => {
       this.user = data.user;
@@ -31,14 +34,13 @@ export class MemberDetailsComponent implements OnInit {
     this.staticTabs.tabs[tabId].active = true;
   }
 
-  //  members/4
- /* loadUser(){
-    this.userService.getUserByID(+this.route.snapshot.params.id).subscribe((user: User) => {
-      this.user = user;
+  sendLike(recipientId: number){
+    this.userService.sendLike(this.authService.decodeedToken.nameid, recipientId).subscribe((response) => {
+      this.alertify.success('you have liked: ' + this.user.knownAs);
     }, (error) => {
       this.alertify.error(error);
     });
-    */
+  }
 
 }
 

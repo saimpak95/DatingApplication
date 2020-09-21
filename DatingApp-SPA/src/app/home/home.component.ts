@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -9,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
 export class HomeComponent implements OnInit {
 
   registerMode = false;
+  baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
   value: any;
@@ -21,7 +23,7 @@ export class HomeComponent implements OnInit {
   }
 
   getValues(){
-    this.http.get('https://localhost:44363/api/Values').subscribe((response) => {
+    this.http.get(this.baseUrl + 'Values').subscribe((response) => {
       this.value = response;
     }, (error) => {
       console.log(error);

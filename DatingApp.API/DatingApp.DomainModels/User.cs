@@ -19,11 +19,11 @@ namespace DatingApp.DomainModels
         public string Interests { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
-        public ICollection<Photo> Photos { get; set; }
-        public ICollection<Like> Likers { get; set; }
-        public ICollection<Like> Likees { get; set; }
-        public ICollection<Message> MessagesSent { get; set; }
-        public ICollection<Message> MessagesRecieved { get; set; }
+        public virtual ICollection<Photo> Photos { get; set; }
+        public virtual ICollection<Like> Likers { get; set; }
+        public virtual ICollection<Like> Likees { get; set; }
+        public virtual ICollection<Message> MessagesSent { get; set; }
+        public virtual ICollection<Message> MessagesRecieved { get; set; }
     }
 
     public class Photo
@@ -34,7 +34,7 @@ namespace DatingApp.DomainModels
         public string DateAdded { get; set; }
         public bool IsMain { get; set; }
         public string PublicID { get; set; }
-        public User User { get; set; }
+        public virtual User User { get; set; }
         public int UserId { get; set; }
     }
 }

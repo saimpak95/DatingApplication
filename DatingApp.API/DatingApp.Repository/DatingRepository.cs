@@ -65,23 +65,13 @@ namespace DatingApp.Repository
 
         public async Task<User> GetUserByID(int ID)
         {
-            var user = await db.Users.Include(temp => temp.Photos).FirstOrDefaultAsync(f => f.Id == ID);
+            var user = await db.Users.FirstOrDefaultAsync(f => f.Id == ID);
             if (user != null)
             {
                 return user;
             }
             return null;
         }
-
-        //public async Task<IEnumerable<User>> GetUsers()
-        //{
-        //    var users = await db.Users.Include(p => p.Photos).ToListAsync();
-        //    if (users != null)
-        //    {
-        //        return users;
-        //    }
-        //    return null;
-        //}
 
         public async Task<bool> SaveAll()
         {
@@ -90,7 +80,7 @@ namespace DatingApp.Repository
 
         public async Task<PagedList<User>> GetUsers(UserParams userParams)
         {
-            var users = db.Users.Include(p => p.Photos).OrderByDescending(u => u.LastActive).AsQueryable();
+            var users = db.Users.OrderByDescending(u => u.LastActive).AsQueryable();
             users = users.Where(u => u.Id != userParams.UserID);
             users = users.Where(u => u.Gender == userParams.Gender);
             if (userParams.MinAge != 18 || userParams.MaxAge != 90)
@@ -128,10 +118,7 @@ namespace DatingApp.Repository
 
         private async Task<IEnumerable<int>> GetUserLikes(int id, bool likers)
         {
-            var user = await db.Users
-                .Include(x => x.Likers)
-                .Include(x => x.Likees)
-                .FirstOrDefaultAsync(u => u.Id == id);
+            var user = await db.Users.FirstOrDefaultAsync(u => u.Id == id);
 
             if (likers)
             {
@@ -155,7 +142,7 @@ namespace DatingApp.Repository
 
         public async Task<PagedList<Message>> GetMessagesForUser(MessageParams messageParams)
         {
-            var message = db.Messages.Include(u => u.Sender).ThenInclude(p => p.Photos).Include(u => u.Recipient).ThenInclude(p => p.Photos).AsQueryable();
+            var message = db.Messages.AsQueryable();
             switch (messageParams.MessageContainer)
             {
                 case "Inbox":
@@ -180,9 +167,6 @@ namespace DatingApp.Repository
         public async Task<IEnumerable<Message>> GetMessageThread(int userID, int recipientId)
         {
             var message = await db.Messages.Include(u => u.Sender)
-                                     .ThenInclude(p => p.Photos)
-                                     .Include(u => u.Recipient)
-                                     .ThenInclude(p => p.Photos)
                                      .Where(m => m.RecipientId == userID && m.RecipientDeleted == false && m.SenderId == recipientId || m.RecipientId == recipientId && m.SenderId == userID && m.SenderDeleted == false)
                                      .OrderBy(m => m.MessageSent)
                                      .ToListAsync();
